@@ -44,15 +44,15 @@ def case_i_min(i):
 def solution():
     sum_max = 0
     sum_min = 0
-    
+    summation = 0
     # i를 모든 scoville에 대해 탐색
     for i in range(len(scoville)):
         # i가 고정되어 있을 때, i가 최소인 경우와 최대인 경우
-        sum_max += scoville[i] * case_i_max(i)
-        sum_min += scoville[i] * case_i_min(i)
-
-    return sum_max-sum_min
-
+        # sum_max += scoville[i] * case_i_max(i)
+        # sum_min += scoville[i] * case_i_min(i)
+        summation += scoville[i] * (case_i_max(i) - case_i_min(i))
+    # return sum_max-sum_min
+    return summation
 #main
 n=int(input())
 scoville = list(map(int,input().split()))
