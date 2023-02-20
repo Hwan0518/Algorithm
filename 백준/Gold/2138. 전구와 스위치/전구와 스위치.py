@@ -55,12 +55,6 @@ def switching(i):
     return
 
 
-def distinguish(i):
-    # i-1번째가 다르다면 True 반환
-    if curState[i-1] != wantState[i-1]:
-        return True
-    
-    
 def solution():
     global curState
     min_cnt = 1e9
@@ -79,7 +73,7 @@ def solution():
         for i in range(1,n):
             
             # i-1번째 전구의 상태를 확인해서, 다르다면 i번째 스위치를 누른다
-            if distinguish(i):
+            if curState[i-1] != wantState[i-1]:
                 cnt +=1
                 switching(i)
 
