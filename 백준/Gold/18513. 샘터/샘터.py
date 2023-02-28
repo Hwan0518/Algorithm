@@ -30,7 +30,8 @@ Access
                 1. 각 집에서 가장 가까운 샘터를 어떻게 알아낼 것인가?
                     - 각 집마다 모든 샘터를 비교 >> n*k = 최대 10만*10만 = TLE 발생
                     - 각 집에서 bfs를 시전해서 가까운 샘터를 찾아야한다 !!! >> 집위치가 샘터와 멀어지면 무조건 TLE
-                    
+                
+                >>> bfs에서 dq에 집의 위치와 거리를 동시에 포함시키면 해결된다                    
 
 '''
 from collections import deque
@@ -40,27 +41,6 @@ input = stdin.readline
 
 
 #define function
-def updateUnhappiness(position): #불행도 갱신 
-    # position은 현재 건설한 집의 위치이다
-    rrrrright = springSite[-1]
-    llllleft = springSite[0]
-    
-    # 건설위치가 가장 오른쪽 샘터보다 오른쪽에 있다면
-    if position > rrrrright:
-        return abs(position - rrrrright)
-    
-    # 건설위치가 가장 왼쪽 샘터보다 왼쪽에 있다면
-    if position < llllleft:
-        return abs(position - llllleft)
-    
-    # 그 외의 경우
-    dq = deque
-    
-    return
-    
-    
-        
-
 def doVisit(position,dist):
     global cnt
     visited.add(position)       #방문처리
@@ -71,7 +51,6 @@ def doVisit(position,dist):
 
 def solution():
     global cnt, visited, possible
-    
     cnt = 0                   # 건설된 집의 수
     unhappiness = 0           # 불행도
     visited = set(springSite) # 건설된 집이나 샘의 위치를 방문처리
