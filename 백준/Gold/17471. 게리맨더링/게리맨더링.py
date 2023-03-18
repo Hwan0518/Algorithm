@@ -117,8 +117,7 @@ population = [0]+list(map(int,input().split()))
 graph = [[] for _ in range(n+1)]
 for i in range(1,n+1):
     data = list(map(int,input().split()))
-    for j in range(1,data[0]+1):
-        graph[i].append(data[j])
+    graph[i] = data[1:]
 
 print(solution())
 
