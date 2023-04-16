@@ -23,6 +23,7 @@ import java.io.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuffer sb = new StringBuffer();
 
         String star = "*";
         String inputCnt = br.readLine();
@@ -30,10 +31,12 @@ public class Main {
         int cnt=0;
 
         while(cnt<starCnt){
-            System.out.printf("%"+starCnt+"s\n", star);
+            String starLine = String.format("%"+starCnt+"s\n",star);
+            sb.append(starLine);
             star += "*";
             cnt ++;
         }
+        System.out.println(sb);
         br.close();
     }
 }
