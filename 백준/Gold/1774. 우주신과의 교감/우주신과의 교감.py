@@ -19,16 +19,16 @@ Access
         - 전체 신들을 탐색해야한다. 그리고 각각에서 최소연결값을 찾아야한다.
         
     try_3)
-        - 전체 node에서 최소를 이어본다
-        >>> 모든 노드가 연결됐는지 확인하는 방법을 모르겠음 ㅜㅜ
+        - 이미 연결된 지점들에서 탐색을 시작한다!
         
     try_4)
-        - kruskal을 사용해본다    
-    
+        - 다시 프림!
 '''
 from math import sqrt
+from heapq import *
 from sys import stdin
 input = stdin.readline
+
 
 
 #define function
@@ -39,52 +39,38 @@ def connect():
                 continue
             cx,cy = god[i]
             nx,ny = god[j]
-            cost = sqrt((cx-nx)**2 + (cy-ny)**2)
-            graph.append((cost,i,j))
-    graph.sort()
-    return
+            cost = 0
+            # 이미 연결된 지점이라면 cost를 0으로 만든다
+            if (i,j) not in before and (j, i) not in before:
+                cost = sqrt((cx-nx)**2 + (cy-ny)**2)
+            graph[i].append((cost,i,j))
+            
     
-
-def findParent(parent,node):
-    if parent[node] != node:
-        parent[node] = findParent(parent,parent[node])
-    return parent[node]
-
-
-def unionParent(parent,stt,end):
-    sttParent = findParent(parent,stt)
-    endParent = findParent(parent,end)
-    # 더 작은쪽을 부모라고 설정
-    if sttParent<endParent:
-        parent[endParent] = sttParent
-    else:
-        parent[sttParent] = endParent
-
-
-def kruskal():
-    # 간선들을 전체탐색한다
-    minCost = 0
-    for cost,stt,end in graph:
-        sttParent = findParent(parent,stt)
-        endParent = findParent(parent,end)
-        # 부모가 다르다면 연결된 상태가 아니므로 연결시켜준다
-        if sttParent != endParent:
-            unionParent(parent,stt,end)
-            minCost += cost
-    return minCost
-
-
-def solution():
-    # 연결정보가 완전하지 않으므로, 그래프를 완성시키고, cost순으로 정렬한다
+def solution(stt):
+    # 가능한 모든 연결 정보를 그래프에 넣음
     connect()
+
+    # 프림 start
+    minCost = 0
+    visited[stt] = True
+    q = graph[stt]
+    heapify(q)
     
-    # 이미 연결된 노드들의 부모를 통일시킨다
-    for _ in range(m):
-        stt,end = map(int,input().split())
-        unionParent(parent,stt,end)
+    # 방문하지 않은 모든 지점에 연결된 간선들중 최솟값을 찾아서 연결함
+    while q:
+        cost,stt,end = heappop(q)
+        if visited[end]:
+            continue
+        minCost += cost
+        visited[end] = True
         
-    # 크루스칼 알고리즘으로 구한 minCost를 출력한다
-    minCost = kruskal()
+        for data in graph[end]:
+            neighbor = data[2]
+            if visited[neighbor]:
+                continue
+            heappush(q,data)
+            
+    # 간선을 모두 탐색했다면 minCost 반환
     return minCost
 
 
@@ -92,7 +78,9 @@ def solution():
 
 #main
 n,m = map(int,input().split())
-god = [(0,0)] + [tuple(map(int,input().split())) for _ in range(n)] # 신들의 위치
-graph = []  # 연결 정보 그래프
-parent = [i for i in range(n+1)]
-print(f'{solution():.2f}')
+god = [(0,0)] + [tuple(map(int,input().split())) for _ in range(n)]     # 신들의 위치
+before = set([tuple(map(int,input().split())) for _ in range(m)])    # 이미 연결된 정보
+graph = [[] for _ in range(n+1)] # 연결 관계 정보
+visited = [True] + [False]*n
+
+print(f'{solution(1):.2f}')
