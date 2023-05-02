@@ -89,12 +89,12 @@ def createShape():
         numVisited = set()
         for i in range(4):
             nr,nc = cr+dr[i], cc+dc[i]
-            if not(0<=nr<n and 0<=nc<m) or mapp[nr][nc]==0:
+            # map을 벗어나거나, 값이 0이거나, 방문한적이 있다면 continue
+            if not(0<=nr<n and 0<=nc<m) or mapp[nr][nc]==0 or mapp[nr][nc] in numVisited:
                 continue
             currentNum = mapp[nr][nc]
-            if currentNum in numVisited:
-                continue
             numVisited.add(currentNum)
+            # 해당 num의 사이즈만큼을 더함
             size += sizeOfLump[currentNum]
         maxSize = max(maxSize, size)
     return maxSize
