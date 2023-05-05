@@ -34,11 +34,13 @@ def solution():
     for right in range(1, n):
         curPrice, curHappy = nList[right][0], nList[right][1]
         sumHappy += curHappy
+
         # 차이가 d이상이라면, 제일 처음 값을 빼준다
         while curPrice-(minPrice:=nList[left][0]) >= d:
             mHappy = nList[left][1]
             sumHappy -= mHappy
             left += 1
+
         # 최댓값 갱신
         maxHappy = max(maxHappy, sumHappy)
     return maxHappy
@@ -48,8 +50,6 @@ def solution():
 
 #main
 n, d = map(int, input().split())
-nList = [[] for i in range(n)]
-for i in range(n):
-    nList[i] = list(map(int, input().split()))
+nList = [list(map(int, input().split())) for _ in range(n)]
 nList.sort()
 print(solution())
