@@ -16,40 +16,43 @@ Access
     try_2)
         - 투포인터
     
-    try_3)
-        - hint : https://chance0523.github.io/algorithm/2020/09/18/algorithm-%EC%83%9D%EC%9D%BC%EC%84%A0%EB%AC%BC/
 '''
-import sys
-input = sys.stdin.readline
-
+from sys import stdin
+input = stdin.readline
 
 
 #define function
 def solution():
-    left = 0
-    maxHappy = gift[0][1]
-    sumHappy = maxHappy
-
-    # 전체탐색
-    for right in range(1, n):
+    maxHappy = 0
+    left=right=0
+    minPrice, Happy = gift[0][0],0
+    
+    # left = 0부터 차례대로 탐색
+    while right <= n-1:
         curPrice, curHappy = gift[right][0], gift[right][1]
-        sumHappy += curHappy
+        diff = curPrice-minPrice
+    
+        # diff가 d보다 작다면 happy를 더하고 right증가
+        if diff<d:
+            Happy += curHappy
+            right +=1
+            maxHappy = max(maxHappy, Happy)
+        
+        # diff가 d이상이라면 다음 left로 넘어감
+        else:
+            Happy -= gift[left][1]
+            left +=1
+            minPrice = gift[left][0]        
 
-        # 차이가 d이상이라면, 제일 처음 값을 빼준다
-        while curPrice-(minPrice:=gift[left][0]) >= d:
-            mHappy = gift[left][1]
-            sumHappy -= mHappy
-            left += 1
-
-        # 최댓값 갱신
-        maxHappy = max(maxHappy, sumHappy)
+        
+    # 최대 만족도를 리턴
     return maxHappy
 
-
+        
 
 
 #main
-n, d = map(int, input().split())
-gift = [list(map(int, input().split())) for _ in range(n)]
+n,d = map(int,input().split())
+gift = [tuple(map(int,input().split())) for _ in range(n)]
 gift.sort()
 print(solution())
