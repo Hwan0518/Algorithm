@@ -27,17 +27,17 @@ input = sys.stdin.readline
 #define function
 def solution():
     left = 0
-    maxHappy = nList[0][1]
+    maxHappy = gift[0][1]
     sumHappy = maxHappy
 
     # 전체탐색
     for right in range(1, n):
-        curPrice, curHappy = nList[right][0], nList[right][1]
+        curPrice, curHappy = gift[right][0], gift[right][1]
         sumHappy += curHappy
 
         # 차이가 d이상이라면, 제일 처음 값을 빼준다
-        while curPrice-(minPrice:=nList[left][0]) >= d:
-            mHappy = nList[left][1]
+        while curPrice-(minPrice:=gift[left][0]) >= d:
+            mHappy = gift[left][1]
             sumHappy -= mHappy
             left += 1
 
@@ -50,6 +50,6 @@ def solution():
 
 #main
 n, d = map(int, input().split())
-nList = [list(map(int, input().split())) for _ in range(n)]
-nList.sort()
+gift = [list(map(int, input().split())) for _ in range(n)]
+gift.sort()
 print(solution())
