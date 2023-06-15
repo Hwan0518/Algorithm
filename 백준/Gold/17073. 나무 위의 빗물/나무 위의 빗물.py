@@ -32,19 +32,26 @@ input = stdin.readline
 def solution():
     leaf = []
     dq = deque()
+    # root부터 탐색 시작, root는 무조건 1
     dq.append(1)
-    before = set()
+    # 노드 방문여부
+    visited = set()
     while dq:
         curNode = dq.popleft()
-        before.add(curNode)
-        child_Cnt = 0
+        # 방문처리
+        visited.add(curNode)
+        check = 0
+        # 자식 노드를 탐색
         for child in graph[curNode]:
-            if child in before:
+            if child in visited:
                 continue
-            child_Cnt +=1
+            # 자식 node가 있다면 체크
+            check = 1
             dq.append(child)
-        if not child_Cnt:
+        # 자식 node가 없다면 leaf에 추가
+        if not check:
             leaf.append(curNode)
+    # w/leaf노드 수가 정답이 됨
     return w/len(leaf)
         
 
@@ -56,6 +63,7 @@ n,w = map(int,input().split())
 graph = [[] for _ in range(n+1)]
 for _ in range(n-1):
     u,v = map(int,input().split())
+    # 무방향 그래프
     graph[u].append(v)
     graph[v].append(u)
 print(solution())
