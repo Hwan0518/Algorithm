@@ -15,18 +15,23 @@
 from heapq import *
 def solution(scoville, K):
     answer = 0
+    flag = False
     heapify(scoville)
-    
-    # 음식이 2개 이상 남아있고, 가장 작은 수가 k 이상이 될때까지 반복
-    while scoville[0] < K:
-        minFst = heappop(scoville)  # 가장 맵지않은 스코빌 지수
+    # 가장 작은 스코빌 지수가 k 이상이 될때까지 반복
+    minFst = heappop(scoville)      # 가장 맵지않은 스코빌 지수
+    while minFst < K:
         minSec = heappop(scoville)  # 두 번째로 맵지않은 스코빌 지수
         new = minFst + minSec*2     # 새로 만든 음식의 스코빌 지수
         heappush(scoville, new)
         answer +=1                  # 섞은 횟수 +1
         # 음식이 두 개 미만으로 남아있다면 더이상 섞을 수 없으므로 break
         if len(scoville)<2:
+            flag = True
             break
+        else:
+            minFst = heappop(scoville)
     
+    if flag:
+        minFst = heappop(scoville)
     # 가장 작은 스코빌 지수가 k 이상이라면 answer를 리턴, 아니라면 -1을 리턴
-    return answer if heappop(scoville) >= K else -1
+    return answer if minFst >= K else -1
