@@ -11,9 +11,8 @@ def solution(sizes):
     
     # w에 더 큰 수를 몰아넣어줌
     for data in sizes:
-        w,h = data
-        w_list.append(max(w,h))
-        h_list.append(min(w,h))
+        w_list.append(max(data))
+        h_list.append(min(data))
     
     # w와 h에서 가장 큰 수들을 곱한 값이 지갑의 크기가 됨
     answer = max(w_list) * max(h_list)
