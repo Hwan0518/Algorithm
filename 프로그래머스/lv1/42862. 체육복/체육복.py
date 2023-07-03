@@ -4,8 +4,11 @@
 - 여벌 번호 reserve
 >>> 체육수업 들을 수 있는 학생 최댓값
 
-lost의 +- 1값이 reserve에 들어있는지 확인
-들어있다면 answer를 증가시키고, reserve에서 그 값을 뺌
+noUniform = reserve에는 속하지 않고 lost에만 속하는, 진짜 체육복이 없는사람
+canBorrow = lost에는 속하지 않고 reserve에만 속하는, 진짜 여분이 있는사람
+
+noUniform의 +-1값이 canBorrow에 들어있는지 확인
+들어있다면 answer를 증가시키고, canBorrow에서 그 값을 뺌
 '''
 def solution(n, lost, reserve):
     # n명중에 lost를 제외한 학생은 체육복이 존재함
