@@ -12,6 +12,8 @@ Approach
 
 >>> 순위를 구해야 하므로 플로이드 워셜만으로는 불가능
     : 말그대로 구현을 해야할듯?
+
+>>> 플로이드 워셜로 가능함!
 '''
 import sys
 sys.setrecursionlimit(10**7)
@@ -24,10 +26,10 @@ def solution(n, results):
         a,b = r
         graph[a][b] = 2 # 이겼을때
         graph[b][a] = 1 # 졌을때
-        
     for p in range(n+1):
         graph[p][p] = 3
         
+    # 플로이드워셜
     for k in range(1,n+1):
         for a in range(1,n+1):
             for b in range(1,n+1):
@@ -35,39 +37,14 @@ def solution(n, results):
                     graph[a][b] = 2
                 elif graph[a][k] == graph[k][b] == 1:
                     graph[a][b] = 1
+            
     
-    # 랭크를 확인
-    ranking = [True] + [False]*n + [True]
-    visited = [False]*(n+1)
-    for p in range(1,n+1):
-        print(graph[p])
+    for a in range(1,n+1):
         flag = True
-        lose = 0
-        for i in range(1,n+1):
-            r = graph[p][i]
-            if r == 0 :
+        for b in range(1,n+1):
+            if graph[a][b] == 0:
                 flag = False
                 break
-            elif r == 1:
-                lose +=1
-        if flag:
-            ranking[lose+1] = True
-            visited[lose+1] = True
-            answer +=1
-    print(ranking)
-    
-    # 랭크를 확인할 수 있으면 True로 변경
-    check = True
-    while check:
-        check = False
-        for i in range(1,n+1):
-            before = ranking[i-1]
-            after = ranking[i+1]
-            if before and after and not visited[i]:
-                answer +=1
-                ranking[i] = True
-                visited[i] = True
-                check = True        
-                break
+        if flag: answer +=1
                 
     return answer
