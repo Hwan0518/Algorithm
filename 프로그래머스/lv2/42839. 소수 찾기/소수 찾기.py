@@ -6,7 +6,9 @@ Approach
     
 
 '''
+from itertools import permutations
 import math
+
 
 
 def findPrime(limit):
@@ -20,7 +22,7 @@ def findPrime(limit):
             while i*j<=limit:
                 allNum[i*j] = False
                 j +=1
-    # flase가 아닌 수는 모두 프라임이다
+    # true인 수는 모두 프라임이다
     return allNum
 
 
@@ -33,16 +35,26 @@ def solution(numbers):
     prime = findPrime(limit)
     
     # 소수 완탐
-    for i in range(2, limit):
-        flag = True
-        temp = numbers[:]
-        if prime[i]:
-            for s in str(i):
-                if s not in temp:
-                    flag = False
-                    break
-                temp.remove(s)
-            if flag:
+    visited = set()
+    for i in range(1, len(numbers)+1): 
+        perm = set(permutations(numbers,i))
+        for c in perm:
+            c = int(''.join(c))
+            if prime[c] and c not in visited:
+                print(c)
+                visited.add(c)
                 answer +=1
+    # 완탐으로 푸는법
+    # for i in range(2, limit):
+    #     flag = True
+    #     temp = numbers[:]
+    #     if prime[i]:
+    #         for s in str(i):
+    #             if s not in temp:
+    #                 flag = False
+    #                 break
+    #             temp.remove(s)
+    #         if flag:
+    #             answer +=1
     
     return answer
