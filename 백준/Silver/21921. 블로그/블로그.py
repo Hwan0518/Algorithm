@@ -11,23 +11,11 @@ input = stdin.readline
 
 n,x = map(int,input().split())
 visitor = list(map(int,input().split()))
-maxNum = sum(visitor[:x])
-cur = maxNum
-cnt = 1
-l = 0
-r = l+x
-while r < n:
-    cur -= visitor[l]
-    cur += visitor[r]
-    
-    if cur > maxNum:
-        cnt = 1
-        maxNum = cur
-    elif cur == maxNum:
-        cnt +=1
-    
-    l +=1
-    r = l+x
+result = [sum(visitor[:x])]
+for i in range(n-x):
+    result.append(result[-1] - visitor[i] + visitor[i+x])
+maxNum = max(result)
+cnt = result.count(maxNum)
 
 if maxNum:
     print(maxNum)
