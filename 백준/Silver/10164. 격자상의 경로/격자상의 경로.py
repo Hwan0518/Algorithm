@@ -29,33 +29,33 @@ def input_data():
     return n,m,k
 
 def non_target(n, m):
+    dp = [[0]*m for _ in range(n)]
     for r in range(n):
         for c in range(m):
             if r==0 and c==0:
                 dp[r][c] = 1
                 continue
             dp[r][c] = dp[r-1][c] + dp[r][c-1]
+    return dp[n-1][m-1]
 
-def target(stt_r, stt_c, target_r, target_c):
+def target(n, m, stt_r, stt_c, target_r, target_c):
+    dp = [[0]*m for _ in range(n)]
     for r in range(stt_r, target_r+1):
         for c in range(stt_c, target_c+1):
-            if r==0 and c==0:
+            if r==stt_r and c==stt_c:
                 dp[r][c] = 1
                 continue
             dp[r][c] = dp[r-1][c] + dp[r][c-1]    
-    
+    return dp[target_r][target_c]
 
 def solution(n,m,k):
-    global dp
-    dp = [[0]*m for _ in range(n)]
     if k:
         target_r = (k-1)//m
         target_c = (k-1)%m
-        target(0, 0, target_r, target_c)
-        target(target_r, target_c, n-1, m-1)
-        return dp[n-1][m-1]
+        result1 = target(n, m, 0, 0, target_r, target_c)
+        result2 = target(n, m, target_r, target_c, n-1, m-1)
+        return result1 * result2
     else:
-        non_target(n, m)
-        return dp[n-1][m-1]
+        return non_target(n, m)
         
 print(solution(*input_data()))
