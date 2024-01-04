@@ -15,49 +15,47 @@
     - 1에서 O까지 가는 경우의 수 * O에서 N*M까지 가는 경우의 수를 구하면 된다
 
 1. 백트래킹
+    : 2^n -> TLE, 메모이제이션을 활용해보자
+    
+2. DP (Bottom-up) : reference = https://hongcoding.tistory.com/116
+    dp[i][j] = i, j에서의 갯수
+             = dp[i-1][j] + dp[i][j-1]
 '''
 from sys import stdin
 input = stdin.readline
 
 def input_data():
     n,m,k = map(int,input().split())
-    graph = [[j for j in range((i-1)*m+1, i*m+1)] for i in range(1,n+1)]
-    return n,m,k,graph
+    return n,m,k
 
-def dfs(cr, cc, visited, graph, target, r_target, c_target): 
-    global result
-    if graph[cr][cc] == target:
-        result +=1
-        return
-    
-    for i in range(2):
-        nr = cr+dr[i]
-        nc = cc+dc[i]
-        if nr > r_target or nc > c_target or visited[graph[nr][nc]]:
-            continue
-        visited[graph[nr][nc]] = True
-        dfs(nr, nc, visited, graph, target, r_target, c_target)
-        visited[graph[nr][nc]] = False
+def non_target(n, m):
+    for r in range(n):
+        for c in range(m):
+            if r==0 and c==0:
+                dp[r][c] = 1
+                continue
+            dp[r][c] = dp[r-1][c] + dp[r][c-1]
+
+def target(stt_r, stt_c, target_r, target_c):
+    for r in range(stt_r, target_r+1):
+        for c in range(stt_c, target_c+1):
+            if r==0 and c==0:
+                dp[r][c] = 1
+                continue
+            dp[r][c] = dp[r-1][c] + dp[r][c-1]    
     
 
-def solution(n,m,k,graph):
-    global dr, dc, result
-    dr = [1, 0]
-    dc = [0, 1]
-    result = 0
-    visited = [False] * (n*m+1)
-    if k >=1:
-        dfs(0, 0, visited, graph, k, k//m, k%m-1)
-        first = result
-        result = 0
-        dfs(k//m, k%m-1, visited, graph, n*m, n-1, m-1)
-        second = result
-        return first * second
+def solution(n,m,k):
+    global dp
+    dp = [[0]*m for _ in range(n)]
+    if k:
+        target_r = (k-1)//m
+        target_c = (k-1)%m
+        target(0, 0, target_r, target_c)
+        target(target_r, target_c, n-1, m-1)
+        return dp[n-1][m-1]
     else:
-        result = 0
-        dfs(0, 0, visited, graph, n*m, n-1, m-1)
-        first = result
-        return first
-    
-
+        non_target(n, m)
+        return dp[n-1][m-1]
+        
 print(solution(*input_data()))
