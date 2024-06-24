@@ -20,12 +20,14 @@ Approach
 def is_odd(num:int):
     return num%2 == 1
 
+
 def odd_cnt(num:int):
     cnt = 0
     for n in str(num):
         if is_odd(int(n)):
             cnt +=1
     return cnt
+
 
 def dfs(l:int, cnt:int, num:int):
     global min_v, max_v
@@ -36,8 +38,8 @@ def dfs(l:int, cnt:int, num:int):
     # 백트래킹
     s_num = str(num)
     if l >= 4:
-        for i1 in range(1, l-2):
-            for i2 in range(i1+1, l-1):
+        for i1 in range(1, l-1): # l-2까지가 아니라 l-1까지임
+            for i2 in range(i1+1, l): # l-1까지가 아니라 l까지임 ㅠㅠ
                 new_num = int(s_num[:i1]) + int(s_num[i1:i2]) + int(s_num[i2:])
                 dfs(len(str(new_num)), cnt + odd_cnt(new_num), new_num)
     elif l == 3:
@@ -48,11 +50,13 @@ def dfs(l:int, cnt:int, num:int):
         dfs(len(str(new_num)), cnt + odd_cnt(new_num), new_num)
     return
 
+
 def main():
     global min_v, max_v
     min_v, max_v = 1e9, -1
     num = int(input())
     dfs(len(str(num)), odd_cnt(num), num)
     return min_v, max_v
+
 
 print(*main())
