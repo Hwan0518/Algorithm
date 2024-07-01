@@ -19,7 +19,7 @@ def dfs(length:int, sq:list, n:int, m:int):
     # 종료 조건
     if length == m:
         if not(tuple(sq) in sequence_visit):
-            heappush(sequence, tuple(sq))
+            sequence.append(tuple(sq))
             sequence_visit.add(tuple(sq))
         return
     # 백트래킹
@@ -41,8 +41,7 @@ def main():
     sequence_visit = set()
     visited = [False]*n
     dfs(0, [], n, m)
-    for _ in range(len(sequence)):
-        print(*heappop(sequence))
-        
+    for sq in sorted(sequence):
+        print(*sq)
 
 main()
