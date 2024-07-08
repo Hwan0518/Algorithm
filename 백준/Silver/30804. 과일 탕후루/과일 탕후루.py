@@ -1,32 +1,24 @@
+from collections import defaultdict
+
 n = int(input())
-tanghuru = list(map(int,input().split()))
-stt = 0
-end = 0
-cnt = 0
-typeCnt = 0
-types = {}
+thr = list(map(int,input().split()))
+t_types = defaultdict(int)
 max_cnt = 0
-tanghuru_type = set()
-while stt < n:
-    while end < n:
-        t = tanghuru[end]
-        if t not in tanghuru_type:
-            if typeCnt >= 2:
-                break
-            types[t] = 1
-            tanghuru_type.add(tanghuru[end])
-            typeCnt +=1
-        else:
-            types[t] += 1
+
+r = 0
+cnt = 0
+for l in range(n):
+    while r < n:
+        if thr[r] not in t_types and len(t_types) > 1:
+            break
+        t_types[thr[r]] +=1
         cnt +=1
-        end +=1
+        r +=1
     max_cnt = max(max_cnt, cnt)
-    stt_t = tanghuru[stt]
-    stt +=1
     cnt -=1
-    types[stt_t] -=1
-    if types[stt_t] == 0:
-        tanghuru_type.remove(stt_t)
-        typeCnt -=1
-    
+    t_stt = thr[l]
+    t_types[t_stt] -=1
+    if t_types[t_stt] == 0:
+        t_types.pop(t_stt)
+
 print(max_cnt)
