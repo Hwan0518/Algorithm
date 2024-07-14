@@ -14,30 +14,26 @@ from sys import stdin
 input = stdin.readline
 
 n,m = map(int,input().split())
-move = dict()
+move = [i for i in range(101)]
 for _ in range(n+m):
     stt,end = map(int,input().split())
     move[stt] = end
 visited = [False]*101
 
-def bfs():
-    min_cnt = 0
-    dq = deque()
-    dq.append((1,0))
-    visited[1] = True
-    while dq:
-        cur,cnt = dq.popleft()
-        if cur == 100:
-            min_cnt = cnt
-            break
-        for i in range(1, 7):
-            new = cur+i
-            if new in move:
-                new = move[new]
-            if new > 100 or visited[new]:
-                continue
-            visited[new] = True
-            dq.append((new,cnt+1))
-    return min_cnt
+dq = deque()
+dq.append((1,0))
+visited[1] = int(1e9)
+while dq:
+    cur,cnt = dq.popleft()
+    if cur == 100:
+        break
+    if visited[cur] and cnt >= visited[cur]:
+        continue
+    visited[cur] = cnt
+    for i in range(1, 7):
+        if cur+i > 100:
+            continue
+        new = move[cur+i]
+        dq.append((new,cnt+1))
 
-print(bfs())
+print(cnt)
