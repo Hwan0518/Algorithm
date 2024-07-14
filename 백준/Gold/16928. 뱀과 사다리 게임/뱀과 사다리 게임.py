@@ -22,7 +22,6 @@ visited = [False]*101
 
 dq = deque()
 dq.append((1,0))
-visited[1] = int(1e9)
 while dq:
     cur,cnt = dq.popleft()
     if cur == 100:
@@ -31,9 +30,8 @@ while dq:
         continue
     visited[cur] = cnt
     for i in range(1, 7):
-        if cur+i > 100:
-            continue
-        new = move[cur+i]
-        dq.append((new,cnt+1))
+        if cur+i <= 100:
+            new = move[cur+i]
+            dq.append((new,cnt+1))
 
 print(cnt)
