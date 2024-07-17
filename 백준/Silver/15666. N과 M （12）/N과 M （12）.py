@@ -1,18 +1,11 @@
-n,m = map(int,input().split())
-nums = list(map(int,input().split()))
-visited = set()
-result = []
-def dfs(seq:list):
+n, m = map(int, input().split())
+nums = sorted(set(map(int, input().split())))
+
+def dfs(seq:list, stt:int):
     if len(seq) == m:
-        sorted_seq = sorted(seq)
-        if tuple(sorted_seq) not in visited:
-            result.append(sorted_seq[:])
-            visited.add(tuple(sorted_seq))
+        print(*seq)
         return
-    for i in nums:
-        seq.append(i)
-        dfs(seq)
-        seq.pop()
-dfs([])
-for r in sorted(result):
-    print(*r)
+    for i in range(stt, len(nums)):
+        dfs(seq + [nums[i]], i)
+
+dfs([], 0)
