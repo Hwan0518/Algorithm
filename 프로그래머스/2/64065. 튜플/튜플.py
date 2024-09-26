@@ -3,8 +3,7 @@
 '''
 def solution(s):
     # 문자열 나누기
-    s = s[2:len(s)-2]
-    s = s.split("},{")
+    s = s.lstrip('{').rstrip('}').split("},{")
     sDict = {}
     for ss in s:
         before = ss.split(',')
