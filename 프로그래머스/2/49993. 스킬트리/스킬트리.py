@@ -6,7 +6,6 @@ def solution(skill, skill_trees):
     answer = 0
     sk = set(tuple(skill))
     for st in skill_trees:
-        flag = True
         seq = 0
         for s in st:
             if s not in sk:
@@ -14,8 +13,7 @@ def solution(skill, skill_trees):
             if s == skill[seq]:
                 seq +=1
             else:
-                flag = False
                 break
-        if flag:
+        else:
             answer +=1
     return answer
