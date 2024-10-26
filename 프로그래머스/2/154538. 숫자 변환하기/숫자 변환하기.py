@@ -1,39 +1,25 @@
 '''
-dp인듯
-
-dp[i] = x를 i로 변환하는데 드는 최소 연산 횟수
-         = min(dp[i-n], dp[i//2], dp[i//3]) +1
+- y는 x보다 항상 크다
+- 따라서 계속 증가시키면서 최솟값을 갱신하면 된다
 '''
+import sys
+sys.setrecursionlimit(10**7)
 def solution(x, y, n):
     Inf = int(1e9)
-    dp = [Inf]*3*y
+    dp = [Inf] *(y+1)
     dp[x] = 0
-    # 전처리
-    for z in (n,x,2*x):
-        cnt = 0
-        for i in range(x,3*y,z):
-            if dp[i] == Inf:
-                dp[i] = cnt
-            else:
-                dp[i] = min(dp[i],cnt)
-            cnt +=1
-    # dp
-    for i in range(x,y+1):
-        # i-n
-        if i-n >=0:
-            a = dp[i-n]
-        else:
-            a = Inf
-        # i//2
-        if not i%2:
-            b = dp[i//2]
-        else:
-            b = Inf
-        # i//3
-        if not i%3:
-            c = dp[i//3]
-        else:
-            c = Inf
-        # 갱신
-        dp[i] = min(dp[i],a+1,b+1,c+1)
-    return -1 if dp[y] == Inf else dp[y]
+    def dfs(i):
+        nonlocal x,y,n,dp
+        if i == x:
+            return 0
+        elif i == 0:
+            return Inf
+        if dp[i] == Inf:
+            dp[i] = min(
+                dfs(max(0, i-n)),
+                dfs(i//2) if not i%2 else dp[0],
+                dfs(i//3) if not i%3 else dp[0]
+            )+1
+        return dp[i]
+    dfs(y)
+    return dp[y] if dp[y] < Inf else -1 
