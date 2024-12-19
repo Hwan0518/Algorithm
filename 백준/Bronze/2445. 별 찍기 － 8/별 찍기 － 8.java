@@ -20,14 +20,16 @@ public class Main {
 
 
 	public static void repeatStar(int n, int stt, int end, boolean state) {
+		StringBuilder sb = new StringBuilder();
 		int add = state ? 1 : -1;
 		for (int r=stt; (state? r<end : r>end); r += add) {
-			String answer = "";
-			answer += "*".repeat(r+1);
-			answer += " ".repeat(2 * (n - r - 1));
-			answer += "*".repeat(r+1);
-			System.out.println(answer);
+			sb.append("*".repeat(r + 1))
+				.append(" ".repeat(2 * (n - r - 1)))
+				.append("*".repeat(r + 1))
+				.append("\n");
 		}
+		if (state) sb.deleteCharAt(sb.length()-1);
+		System.out.println(sb);
 	}
 
 
