@@ -3,35 +3,45 @@ import java.util.*;
 
 /**
  * condition
- * - 조건 분
+ * - 조건 분기
  */
 public class Main {
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st1 = new StringTokenizer(br.readLine());
 		// s1,s2
+		StringTokenizer st1 = new StringTokenizer(br.readLine());
 		int s1 = Integer.parseInt(st1.nextToken());
 		int s2 = Integer.parseInt(st1.nextToken());
 		// sample
-		if (!calc(false, s1, br)) return;
+		boolean sample = calc(s1);
 		// system
-		if (!calc(true, s2, br)) return;
+		boolean system = calc(s2);
+		// answer
+		if (!sample) {
+			bw.append("Wrong Answer");
+		} else if (!system) {
+			bw.append("Why Wrong!!!");
+		} else {
+			bw.append("Accepted");
+		}
 		// all success
-		System.out.println("Accepted");
+		bw.flush();
+		br.close();
+		bw.close();
 	}
 	
 	
-	public static boolean calc(boolean isSystem, int cnt, BufferedReader br) throws IOException {
+	public static boolean calc(int cnt) throws IOException {
 		// search
-		for (int i=0; i<cnt; i++) {
+		while (cnt-- >0) {
 			String[] input = br.readLine().split(" ");
 			if (!input[0].equals(input[1])) {
-				System.out.println(isSystem? "Why Wrong!!!" : "Wrong Answer");
 				return false;
 			}
 		}
-		return true;
+		return true;	
 	}
 
 }
