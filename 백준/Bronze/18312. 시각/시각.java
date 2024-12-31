@@ -16,8 +16,7 @@ public class Main {
 		for (int h=0; h<n+1; h++) {
 			for (int m=0; m<60; m++) {
 				for (int s=0; s<60; s++) {
-					String time = String.format("%02d%02d%02d", h,m,s);
-					if (check(k, time)) cnt++;
+					if (check(k, h, m, s)) cnt++;
 				}
 			}
 		}
@@ -25,9 +24,16 @@ public class Main {
 		System.out.println(cnt);
 	}
 
-	public static boolean check(int k, String time) {
+	public static boolean check(int k, int h, int m, int s) {
+		String sh = h<10 ? "0"+String.valueOf(h) : String.valueOf(h);
+		String sm = m<10 ? "0"+String.valueOf(m) : String.valueOf(m);
+		String ss = s<10 ? "0"+String.valueOf(s) : String.valueOf(s);
 		// check
-		if (String.valueOf(time).contains(String.valueOf(k))) {
+		if (sh.contains(String.valueOf(k))) {
+			return true;
+		} else if (sm.contains(String.valueOf(k))) {
+			return true;
+		} else if (ss.contains(String.valueOf(k))) {
 			return true;
 		}
 		return false;
