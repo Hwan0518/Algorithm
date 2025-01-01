@@ -10,7 +10,8 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int s = 0;
-		for (int i=0; i<10; i++) {
+		int i = 0;
+		while (i<10) {
 			int cur = Integer.parseInt(br.readLine()); 
 			s += cur;
 			if (s >=100) {
@@ -18,14 +19,15 @@ public class Main {
 				int left = 100-(s-cur);
 				if (right == left) {
 					System.out.print(s);
-					System.exit(0);
+					break;
 				} else {
 					System.out.print(right>left ? s-cur : s);
-					System.exit(0);
+					break;
 				}	
 			}
+			i ++;
 		}
-		System.out.print(s);
+		if (i==10) System.out.print(s);
 	}
 	
 }
