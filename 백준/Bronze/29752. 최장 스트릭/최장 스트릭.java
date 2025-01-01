@@ -15,11 +15,12 @@ public class Main {
 		for (int i=0; i<n; i++) {
 			if (Integer.parseInt(st.nextToken()) != 0) {
 				cur++;
-				maxCnt = Math.max(maxCnt, cur);
 			} else {
+				maxCnt = Math.max(maxCnt, cur);
 				cur = 0;
 			}
-		}	
+		}
+		maxCnt = Math.max(maxCnt, cur);
 		System.out.print(maxCnt);
 	}
 	
