@@ -17,12 +17,11 @@ public class Main {
 			}
 			for (int count:cnt) {
 				if (count == 0) {
-					sb.append("N\n");
 					pangram = false;
 					break;
 				}
 			}
-			if (pangram) sb.append("Y\n");
+			sb.append(pangram ? "Y\n" : "N\n");
 			input = br.readLine().toCharArray();
 		}
 		System.out.print(sb);
