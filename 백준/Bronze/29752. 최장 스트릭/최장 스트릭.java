@@ -13,7 +13,7 @@ public class Main {
 		int maxCnt = 0;
 		int cur = 0;
 		for (int i=0; i<n; i++) {
-			if (Integer.parseInt(st.nextToken()) != 0) {
+			if (!st.nextToken().equals("0")) {
 				cur++;
 			} else {
 				maxCnt = Math.max(maxCnt, cur);
