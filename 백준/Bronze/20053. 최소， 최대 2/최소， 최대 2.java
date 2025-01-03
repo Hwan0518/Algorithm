@@ -20,7 +20,7 @@ public class Main {
 				min = Math.min(min, num);
 				max = Math.max(max, num);
 			}
-			sb.append(min +" "+max+"\n");
+			sb.append(min).append(" ").append(max).append("\n");
 		}
 		System.out.print(sb);
 	}
