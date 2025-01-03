@@ -21,11 +21,9 @@ public class Main {
 			cntMap.put("HTH", 0);
 			cntMap.put("HHT", 0);
 			cntMap.put("HHH", 0);
-			char[] arr = br.readLine().toCharArray();
+			String input = br.readLine();
 			for (int stt=0; stt<38; stt++) {
-				String key = sb.append(arr[stt])
-						.append(arr[stt+1])
-						.append(arr[stt+2]).toString();
+				String key = input.substring(stt, stt+3);
 				cntMap.put(key, cntMap.get(key)+1);
 				sb.setLength(0);
 			}
