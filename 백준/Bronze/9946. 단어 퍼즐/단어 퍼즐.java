@@ -9,27 +9,33 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
-		Map<Character, Integer> m1 = new HashMap<>();
-		Map<Character, Integer> m2 = new HashMap<>();
+		Map<Character, Integer> m = new HashMap<>();
 		String w1 = br.readLine();
 		String w2 = br.readLine();
+		boolean isSame = true;
 		int cnt = 1;
 		while (!w1.equals("END") || !w2.equals("END")) {
-			for (char w:w1.toCharArray()) {
-				m1.put(w, m1.getOrDefault(w, 0) +1);
+			char[] w11 = w1.toCharArray();
+			char[] w22 = w2.toCharArray();
+			for (int i=0; i<Math.max(w11.length, w22.length); i++) {
+				if (i < w11.length) m.put(w11[i], m.getOrDefault(w11[i], 0) +1);
+				if (i < w22.length) m.put(w22[i], m.getOrDefault(w22[i], 0) -1);
 			}
-			for (char w:w2.toCharArray()) {
-				m2.put(w, m2.getOrDefault(w, 0) +1);
+			sb.append("Case ").append(cnt).append(": ");
+			for (int v:m.values()) {;
+				if (v != 0) {
+					sb.append("different\n");
+					isSame = false;
+					break;
+				}
 			}
-			sb.append("Case ").append(cnt).append(": ")
-			.append(m1.equals(m2) ? "same" : "different")
-			.append("\n");
+			sb.append(isSame ? "same\n" : "");
 			// input again
 			w1 = br.readLine();
 			w2 = br.readLine();
+			isSame = true;
 			cnt++;
-			m1.clear();
-			m2.clear();
+			m.clear();
 		}
 		System.out.print(sb);
 	}
