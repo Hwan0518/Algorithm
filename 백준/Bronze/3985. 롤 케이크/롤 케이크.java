@@ -17,28 +17,25 @@ public class Main {
 		// input
 		int l = Integer.parseInt(br.readLine());
 		int n = Integer.parseInt(br.readLine());
-		int[][] wantList = new int[n][2];
-		// calc expected
+		// calc
 		int expectedMaxVal = 0;
 		int expectedMaxVisit = 0;
+		int realMaxVal = 0;
+		int realMaxVisit = 0;
+		int[] selected = new int[l+1];
+		Arrays.fill(selected, -1);
+		int[] visitor = new int[n];
 		for (int i=0; i<n; i++) {
-			wantList[i] = Arrays.stream(br.readLine().split(" "))
+			int[] want = Arrays.stream(br.readLine().split(" "))
 					.mapToInt(Integer::parseInt)
 					.toArray();
-			int len = wantList[i][1]-wantList[i][0]+1; 
+			// calc expected
+			int len = want[1]-want[0]+1; 
 			if (len > expectedMaxVal) {
 				expectedMaxVal = len;
 				expectedMaxVisit = i;
 			}
-		}
-		// calc real
-		int[] selected = new int[l+1];
-		Arrays.fill(selected, -1);
-		int[] visitor = new int[n];
-		int realMaxVal = 0;
-		int realMaxVisit = 0;
-		for (int i=0; i<n; i++) {
-			int[] want = wantList[i];
+			// calc real
 			for (int j=want[0]; j<=want[1]; j++) {
 				if (selected[j] == -1) {
 					selected[j] = i;
