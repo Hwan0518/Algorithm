@@ -18,26 +18,23 @@ public class Main {
 		int l = Integer.parseInt(br.readLine());
 		int n = Integer.parseInt(br.readLine());
 		// calc
-		int expectedMaxVal = 0;
-		int expectedMaxVisit = 0;
-		int realMaxVal = 0;
-		int realMaxVisit = 0;
+		int expectedMaxVal = 0, expectedMaxVisit = 0;
+		int realMaxVal = 0, realMaxVisit = 0;
 		int[] selected = new int[l+1];
-		Arrays.fill(selected, -1);
-		int[] visitor = new int[n];
-		for (int i=0; i<n; i++) {
-			int[] want = Arrays.stream(br.readLine().split(" "))
-					.mapToInt(Integer::parseInt)
-					.toArray();
+		int[] visitor = new int[n+1];
+		for (int i=1; i<n+1; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			int s = Integer.parseInt(st.nextToken());
+			int e = Integer.parseInt(st.nextToken());
 			// calc expected
-			int len = want[1]-want[0]+1; 
+			int len = e-s+1; 
 			if (len > expectedMaxVal) {
 				expectedMaxVal = len;
 				expectedMaxVisit = i;
 			}
 			// calc real
-			for (int j=want[0]; j<=want[1]; j++) {
-				if (selected[j] == -1) {
+			for (int j=s; j<=e; j++) {
+				if (selected[j] == 0) {
 					selected[j] = i;
 					visitor[i] ++;
 				}
@@ -48,7 +45,7 @@ public class Main {
 			}
 		}
 		// answer
-		sb.append(expectedMaxVisit+1).append("\n").append(realMaxVisit+1);
+		sb.append(expectedMaxVisit).append("\n").append(realMaxVisit);
 		System.out.print(sb);
 	}
 		
