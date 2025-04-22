@@ -1,42 +1,17 @@
-/*
-Condition
-    - TL :
-      ML :
-
-Question
-    -
-
-Access
-    -
-
-input&output hint
-BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-StringBuffer sb = new StringBuffer();
-String input = br.readLine();
-int val = Integer.parseInt(input);
-sout(sb);
-br.close();
-*/
-
+import java.util.*;
 import java.io.*;
 
-
-
 public class Main {
-    public static void main(String[] args) throws IOException {
+    
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuffer sb = new StringBuffer();
-
-        // 주어진 입력
-        String input = br.readLine();
-
-        while(input!=null && input.isEmpty() == false){
-            sb.append(input +"\n");
-            input = br.readLine();
+        StringBuilder sb = new StringBuilder();
+        String s = br.readLine();
+        while (s != null) {
+            sb.append(s).append("\n");
+            s = br.readLine();
         }
-
-
-        System.out.println(sb);
-        br.close();
+        System.out.print(sb);
     }
+    
 }
