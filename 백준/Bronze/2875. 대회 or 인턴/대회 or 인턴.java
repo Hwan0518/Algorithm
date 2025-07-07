@@ -19,19 +19,11 @@ public class Main {
 		int cnt = 0;
 		if (k>=2) {
 			for (int i=0; 2*i<=k; i++) {
-				int its_w = 2*i;
-				int its_m = k-2*i;
-				int cur_team = Math.min((n-2*i)/2, m-(k-2*i));
-				if (n-its_w>=0 && m-its_m >=0) {
-					cnt = Math.max(cnt, cur_team);
-				}
+				cnt = Math.max(cnt, Math.min((n-2*i)/2, m-(k-2*i)));
 			}
 		} else {
 			int its_m = k;
-			int cur_team = Math.min(n, m-k);
-			if (m-its_m>=0) {
-				cnt = Math.max(cnt, cur_team);
-			}
+			cnt = Math.max(cnt, Math.min(n, m-k));
 		}
 		
 		// result
