@@ -18,19 +18,18 @@ public class Main {
 		
 		// calc -> Ax+By+Cz=N
 		int cur;
-		int remain_except_c;
 		int remain_except_b;
 		if (n%c == 0) {
 			System.out.print(1);
 			return;
 		} else {
-			for (int z=n/c; z>0; z--) {
-				remain_except_c = n-c*z;
-				if (remain_except_c%b == 0) {
+			for (int z=n/c; z>=0; z--) {
+				int remain_except_c = n-c*z;  
+				if (remain_except_c % b == 0) {
 					System.out.print(1);
 					return;
 				} else {
-					for (int y=remain_except_c/b; y>0; y--) {
+					for (int y=remain_except_c/b; y>=0; y--) {
 						remain_except_b = n-b*y-c*z;
 						if (remain_except_b%a == 0) {
 							System.out.print(1);
