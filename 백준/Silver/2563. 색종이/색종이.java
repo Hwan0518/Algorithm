@@ -11,7 +11,8 @@ public class Main {
 		int n = Integer.parseInt(br.readLine());
 		
 		// find total area
-		Set<String> area = new HashSet<>();
+		int totalCount = 0;
+		int[][] area = new int[100][100];
 		for (int i=0; i<n; i++) {
 			// input r,c
 			StringTokenizer st = new StringTokenizer(br.readLine());
@@ -20,13 +21,16 @@ public class Main {
 			// push confetti loc to set
 			for (int x=r; x<r+10; x++) {
 				for (int y=c; y<c+10; y++) {
-					area.add(String.valueOf(x)+","+String.valueOf(y));
+					if (area[x][y] == 0) {
+						totalCount ++;
+					}
+					area[x][y] ++;
 				}
 			}
 		}
 		
 		// result
-		System.out.print(area.size());
+		System.out.print(totalCount);
 		
     }
 	
