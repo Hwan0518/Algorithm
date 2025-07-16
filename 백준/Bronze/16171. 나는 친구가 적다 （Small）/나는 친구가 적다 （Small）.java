@@ -12,13 +12,14 @@ public class Main {
 		String k = br.readLine();
 		
 		// create new 's' without 'number' type
-		String s = "";
+		StringBuilder sb = new StringBuilder();
 		for (char c : s_char) {
 			// c == alphabet -> add new 's'
 			if ((65<=c && c<=90) || (97<=c && c<=122)) {
-				s += c;
+				sb.append(c);
 			}
 		}
+		String s = sb.toString();
 		
 		// is contains?
 		int result = 0;
