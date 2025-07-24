@@ -7,8 +7,9 @@ public class Main {
 	
 	static int n;
 	static int m;
-	static Set<String> seqDuplCheck = new HashSet<>();
-	static int[] numDuplCheck;
+	static boolean[] visited;
+	static int[] selected;
+	static StringBuilder sb;
 	
 	public static void main(String[] args) throws IOException {
         
@@ -19,19 +20,12 @@ public class Main {
 		m = Integer.parseInt(st.nextToken());
 		
 		// Backtracking
-		numDuplCheck = new int[n+1];
-		dfs(0, "");
-		
-		// sort
-		List<String> result = new ArrayList<>(seqDuplCheck);
-		result.sort(Comparator.naturalOrder());
+		visited = new boolean[n+1];
+		selected = new int[n+1];
+		sb = new StringBuilder();
+		dfs(0);
 		
 		// result
-		StringBuilder sb = new StringBuilder();
-		for (String r : result) {
-			sb.append(r);
-			sb.append("\n");
-		}
 		sb.setLength(sb.length()-1);
 		System.out.print(sb);
 		
@@ -39,21 +33,22 @@ public class Main {
 	
 	
 	// backtracking dfs
-	public static void dfs(int cnt, String curSeq) {
+	public static void dfs(int cnt) {
 		if (cnt == m) {
-			if (seqDuplCheck.contains(curSeq)) {
-				return;
+			for (int i=1; i<=m; i++) {
+				sb.append(selected[i]).append(" ");
 			}
-			seqDuplCheck.add(curSeq);
+			sb.append("\n");
+			return;
 		}
 		for (int i=1; i<=n; i++) {
-			if (numDuplCheck[i] > 0) {
+			if (visited[i]) {
 				continue;
 			}
-			numDuplCheck[i] ++;
-			String newSeq = curSeq.length()>0 ? curSeq+" "+String.valueOf(i) : String.valueOf(i); 
-			dfs(cnt+1, newSeq);
-			numDuplCheck[i] --;
+			visited[i] = true;
+			selected[cnt+1] = i;
+			dfs(cnt+1);
+			visited[i] = false;
 		}
 	}
 		
