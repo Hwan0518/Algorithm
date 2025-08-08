@@ -23,9 +23,7 @@ public class Main {
 		
 		// edges
 		edges = new ArrayList[n+1];
-		for (int i=0; i<n+1; i++) {
-			edges[i] = new ArrayList<>();
-		}
+		for (int i=0; i<n+1; i++) edges[i] = new ArrayList<>();
 		for (int i=0; i<m; i++) {
 			st = new StringTokenizer(br.readLine());
 			int a = Integer.parseInt(st.nextToken());
@@ -33,12 +31,7 @@ public class Main {
 			edges[a].add(b);
 			edges[b].add(a);
 		}
-		
-		// sort
-		for (int i=0; i<n+1; i++) {
-			Collections.sort(edges[i]);
-		}
-		
+		for (int i=0; i<n+1; i++) Collections.sort(edges[i]);
 		
 		// dfs
 		init();
@@ -55,31 +48,39 @@ public class Main {
 	
 	// init
 	static void init() {
-		result.append(v).append(" ");
 		visited = new boolean[n+1];
-		visited[v] = true;
 	}
 	
 	// dfs
-	static void dfs(int stt) {
-		for(int node : edges[stt]) {
-			if (visited[node]) continue;
-			visited[node] = true;
-			result.append(node).append(" ");
-			dfs(node);
+	static void dfs(int node) {
+		// visit
+		visited[node] = true;
+		// record visit node
+		result.append(node).append(" ");
+		// search edge
+		for(int next : edges[node]) {
+			// already visited.. so next dfs no effect. why don't works?
+			if (visited[next]) continue;
+			dfs(next);
 		}
 	}
 	
 	// bfs
 	static void bfs(int stt) {
 		ArrayDeque<Integer> q = new ArrayDeque<>();
-		q.addAll(edges[stt]);
+		q.add(stt);
+		visited[stt] = true;
 		while (!q.isEmpty()) {
-			int node = q.remove();
-			if (visited[node]) continue;
-			visited[node] = true;
-			q.addAll(edges[node]);
-			result.append(node).append(" ");
+			// cur node
+			int cur = q.remove();
+			// record visit node
+			result.append(cur).append(" ");
+			for (int next : edges[cur]) {
+				if (visited[next]) continue;
+				// visit
+				visited[next] = true;
+				q.add(next);
+			}
 		}
 	}
 	
