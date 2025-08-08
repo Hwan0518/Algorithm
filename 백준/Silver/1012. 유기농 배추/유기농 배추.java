@@ -11,9 +11,7 @@ public class Main {
 	static int k;
 	static int[][] map;
 	static Node[] loc;
-	static boolean[] visited;
 	static int cnt;
-	static boolean isCount;
 	static int[] dx = {-1, 1, 0, 0};
 	static int[] dy = {0, 0, -1, 1};
 	static StringBuilder sb;
@@ -132,7 +130,6 @@ public class Main {
 		k = Integer.parseInt(st.nextToken());
 		map = new int[m][n];
 		loc = new Node[k];
-		visited = new boolean[k];
 		cnt = 0;
 		
 		// filling loc
