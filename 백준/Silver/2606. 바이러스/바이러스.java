@@ -35,8 +35,8 @@ public class Main {
 		// dfs
 		visited = new boolean[n+1];
 		visited[1] = true;
-		dfs(1);
-		
+//		dfs(1);
+		bfs(1);
 		
 		// result
 		System.out.print(cnt);
@@ -56,6 +56,30 @@ public class Main {
 			dfs(next);
 		
 		}
+	}
+	
+	
+	static void bfs(int stt) {
+		
+		Deque<Integer> q = new ArrayDeque<>();
+		q.add(stt);
+		
+		while(!q.isEmpty()) {
+			
+			int node = q.pop();
+			
+			for (int next : edge[node]) {
+				
+				if (visited[next]) continue;
+				visited[next] = true;
+				cnt ++;
+				
+				q.add(next);
+				
+			}
+			
+		}
+		
 	}
 		
 	
