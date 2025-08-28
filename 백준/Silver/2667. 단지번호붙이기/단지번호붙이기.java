@@ -40,8 +40,8 @@ public class Main {
 				visited[i][j] = true;
 				
 				cnt = 1;
-				dfs(i, j);
-//				bfs(i, j);
+//				dfs(i, j);
+				bfs(i, j);
 				
 				apt ++;
 				result.add(cnt);
@@ -80,6 +80,54 @@ public class Main {
 		
 	}
 		
+	
+	static void bfs(int r, int c) {
+		
+		Deque<Node> q = new ArrayDeque<>();
+		q.add(new Node(r, c));
+		
+		while (!q.isEmpty()) {
+			
+			Node node = q.pop();
+			
+			for (int i=0; i<4; i++) {
+				
+				int nr = node.getX() + dr[i];
+				int nc = node.getY() + dc[i];
+				
+				if (!(0<=nr && nr<n && 0<=nc && nc<n)) continue;
+				if (map[nr][nc] == 0) continue;
+				if (visited[nr][nc]) continue;
+				
+				visited[nr][nc] = true;
+				q.add(new Node(nr, nc));
+				cnt ++;
+				
+			}
+		}
+	}
+	
+	
+	
+	static class Node {
+		
+		int x;
+		int y;
+		
+		Node(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+		
+		int getX() {
+			return this.x;
+		}
+		
+		int getY() {
+			return this.y;
+		}
+		
+	}
 	
 	
 }
