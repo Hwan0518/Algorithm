@@ -12,7 +12,6 @@ public class Main {
 	static int[] arr;
 	static StringBuilder answer = new StringBuilder();
 	static int[] cur;
-	static Set<String> dupl = new HashSet<>();
 	
 	public static void main(String[] args) throws IOException {
 
@@ -47,21 +46,19 @@ public class Main {
 		
 		if (size == m) {
 			
-			StringBuilder sb = new StringBuilder();
-			for (int i=0; i<m; i++) sb.append(cur[i]).append(" ");
-			
-			if (!dupl.contains(sb.toString())) answer.append(sb).append("\n");
-
-			dupl.add(sb.toString());
+			for (int i=0; i<m; i++) answer.append(cur[i]).append(" ");
+			answer.append("\n");
 			
 			return;
 			
 		}
 		
+		int dupl = -1;
 		for (int i=0; i<n; i++) {
 			
-			if (visited[i]) continue;
+			if (visited[i] || dupl == arr[i]) continue;
 			visited[i] = true;
+			dupl = arr[i];
 			
 			cur[size] = arr[i];
 			dfs(size+1);
