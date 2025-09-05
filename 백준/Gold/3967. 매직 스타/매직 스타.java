@@ -32,10 +32,12 @@ public class Main {
 				int idx = 9*i + j;
 
 				if (size < 12 && idx == loc[size]) {
+					
 					if (row[j] >= 65 && row[j] <= 76) {
 						select[size] = row[j];
 						visited[row[j]-65] = true;
 					}
+					
 					else {
 						select[size] = -1;
 					}
@@ -43,7 +45,6 @@ public class Main {
 					size ++;
 				}
 			}
-
 		}
 
 		// dfs
@@ -60,6 +61,7 @@ public class Main {
 					sb.append(ans.charAt(size));
 					size++;
 				}
+				
 				else sb.append(".");
 
 			}
@@ -68,7 +70,6 @@ public class Main {
 		}
 
 		System.out.print(sb);
-
 	}
 
 
@@ -79,7 +80,6 @@ public class Main {
 	static void dfs(int size) {
 
 		if (ans != null) return;
-		if (!validate(size)) return;
 
 		if (size == 12) {
 
@@ -109,42 +109,24 @@ public class Main {
 		}
 	}
 
-
-
-
-
-
-
-	static boolean validate(int size) {
-
-		for (Set<Integer> line : lines) {
-
-			if (!line.contains(size)) continue;
-
-			boolean visitAll = true;
-			for (int idx : line) visitAll = visitAll && select[idx]!=-1;
-			if (!visitAll) continue;
-
-			int sum = 0;
-			for (int idx : line) {
-				sum += select[idx];
-			}
-			if (sum != (64*4 + 26)) return false;
-		}
-
-		return true;
-	}
-
+	
+	
 
 	static boolean validateAll() {
+		
 		for (Set<Integer> line : lines) {
+			
 			int sum = 0;
 			for (int idx : line) {
+				
 				if (select[idx] == -1) return false;
 				sum += select[idx];
+				
 			}
+			
 			if (sum != 64*4 + 26) return false;
 		}
+		
 		return true;
 	}
 
