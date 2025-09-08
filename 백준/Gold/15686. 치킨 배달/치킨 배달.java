@@ -11,7 +11,6 @@ public class Main {
 	static int homeCnt;
 	static boolean[] select;
 	static int cityDist = Integer.MAX_VALUE;
-	static int[] homeDist;
 	static int[][] dist;
 
 
@@ -84,9 +83,6 @@ public class Main {
 
 
 	static void calcCityDist() {
-
-		homeDist = new int[homeCnt];
-		for (int i=0; i<homeCnt; i++) homeDist[i] = Integer.MAX_VALUE;
 
 		int curCost = 0;
 		for (int i=0; i<homeCnt; i++) {
