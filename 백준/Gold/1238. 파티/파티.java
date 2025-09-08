@@ -8,8 +8,8 @@ public class Main {
 	static int x;
 	static List<Node>[] graph;
 	static List<Node>[] rGraph;
-	static int[][] dist;
-	static int[][] rDist;
+	static int[] dist;
+	static int[] rDist;
 
 
 	public static void main(String[] args) throws IOException {
@@ -22,15 +22,11 @@ public class Main {
 		m = Integer.parseInt(st.nextToken());
 		x = Integer.parseInt(st.nextToken());
 
-		dist = new int[n+1][n+1];
-		rDist = new int[n+1][n+1];
+		dist = new int[n+1];
+		rDist = new int[n+1];
 		for (int i=0; i<n+1; i++) {
-			for (int j=0; j<n+1; j++) {
-
-				dist[i][j] = Integer.MAX_VALUE;
-				rDist[i][j] = Integer.MAX_VALUE;
-
-			}
+			dist[i] = Integer.MAX_VALUE;
+			rDist[i] = Integer.MAX_VALUE;
 		}
 
 		graph = new ArrayList[n+1];
@@ -70,7 +66,7 @@ public class Main {
 		q.offer(new Node(stt, 0));
 
 		List<Node>[] usingGraph;
-		int[][] usingDist;
+		int[] usingDist;
 		if (reverse) {
 			usingGraph = rGraph;
 			usingDist = rDist;
@@ -80,7 +76,7 @@ public class Main {
 			usingDist = dist;
 		}
 
-		usingDist[stt][stt] = 0;
+		usingDist[stt] = 0;
 
 		// search
 		while (!q.isEmpty()) {
@@ -89,7 +85,7 @@ public class Main {
 			int curIdx = cur.idx;
 			int curT = cur.t;
 
-			if (usingDist[stt][curIdx] < curT) continue;
+			if (usingDist[curIdx] < curT) continue;
 
 			for (Node next : usingGraph[curIdx]) {
 
@@ -97,8 +93,8 @@ public class Main {
 				int nextT = next.t;
 				int goNextT = curT + nextT;
 
-				if (usingDist[stt][nextIdx] < goNextT) continue;
-				usingDist[stt][nextIdx] = goNextT;
+				if (usingDist[nextIdx] < goNextT) continue;
+				usingDist[nextIdx] = goNextT;
 				q.offer(new Node(nextIdx, goNextT));
 			}
 		}
@@ -111,7 +107,7 @@ public class Main {
 
 		int maxTime = 0;
 
-		for (int i = 1; i < n+1; i++) maxTime = Math.max(maxTime, dist[x][i] + rDist[x][i]);
+		for (int i = 1; i < n+1; i++) maxTime = Math.max(maxTime, dist[i] + rDist[i]);
 
 		return maxTime;
 	}
