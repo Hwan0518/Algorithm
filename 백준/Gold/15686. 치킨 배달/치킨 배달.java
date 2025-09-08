@@ -5,13 +5,14 @@ public class Main {
 
 	static int n;
 	static int m;
-	static List<String> chicken;
-	static List<String> home;
-	static int chickenCnt = 0;
-	static int homeCnt = 0;
+	static List<Node> chicken;
+	static List<Node> home;
+	static int chickenCnt;
+	static int homeCnt;
 	static boolean[] select;
 	static int cityDist = Integer.MAX_VALUE;
 	static int[] homeDist;
+	static int[][] dist;
 
 
 
@@ -26,7 +27,6 @@ public class Main {
 
 		home = new ArrayList<>();
 		chicken = new ArrayList<>();
-
 		for (int i=0; i<n; i++) {
 
 			int[] row = Arrays.stream(br.readLine().split(" "))
@@ -34,15 +34,22 @@ public class Main {
 				.toArray();
 
 			for (int j=0; j<n; j++) {
+				if (row[j] == 1) home.add(new Node(i, j));
+				else if (row[j] == 2) chicken.add(new Node(i, j));
 
-				if (row[j] == 1) {
-					homeCnt ++;
-					home.add(i+","+j);
-				}
-				else if (row[j] == 2) {
-					chickenCnt ++;
-					chicken.add(i+","+j);
-				}
+			}
+		}
+		homeCnt = home.size();
+		chickenCnt = chicken.size();
+
+		dist = new int[homeCnt][chickenCnt];
+		for (int i=0; i<homeCnt; i++) {
+			for (int j=0; j<chickenCnt; j++) {
+
+				Node h = home.get(i);
+				Node c = chicken.get(j);
+				dist[i][j] = Math.abs(h.r - c.r) + Math.abs(h.c - c.c);
+
 			}
 		}
 
@@ -60,7 +67,7 @@ public class Main {
 	static void dfs(int size, int selectCnt) {
 
 		if (size == chickenCnt || selectCnt == m) {
-			if (selectCnt > 0) calcCityDist();
+			if (selectCnt == m) calcCityDist();
 			return;
 		}
 
@@ -81,28 +88,35 @@ public class Main {
 		homeDist = new int[homeCnt];
 		for (int i=0; i<homeCnt; i++) homeDist[i] = Integer.MAX_VALUE;
 
-		for (int i=0; i<chickenCnt; i++) {
+		int curCost = 0;
+		for (int i=0; i<homeCnt; i++) {
 
-			if (!select[i]) continue;
-			String[] locCh = chicken.get(i).split(",");
+			int minCost = Integer.MAX_VALUE;
+			for (int j = 0; j<chickenCnt; j++) {
 
-			for (int j=0; j<homeCnt; j++) {
+				if (!select[j]) continue;
+				minCost = Math.min(minCost, dist[i][j]);
 
-				String[] locH = home.get(j).split(",");
-
-				int rCh = Integer.parseInt(locCh[0]);
-				int cCh = Integer.parseInt(locCh[1]);
-
-				int rH = Integer.parseInt(locH[0]);
-				int cH = Integer.parseInt(locH[1]);
-
-				homeDist[j] = Math.min(homeDist[j], Math.abs(rCh-rH) + Math.abs(cCh-cH));
 			}
+
+			curCost += minCost;
+			if (curCost >= cityDist) return;
 		}
 
-		int curCityDist = Arrays.stream(homeDist).sum();
-		cityDist = Math.min(cityDist, curCityDist);
+		cityDist = curCost;
 	}
 
 
+
+	static class Node {
+
+		int r;
+		int c;
+
+		Node(int r, int c) {
+			this.r = r;
+			this.c = c;
+		}
+
+	}
 }
