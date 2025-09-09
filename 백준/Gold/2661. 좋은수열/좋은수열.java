@@ -42,7 +42,7 @@ public class Main {
 			if (i==pre) continue;
 
 			selected[size] = i;
-			if (!validate(size+1)) continue;
+			if (!validate(size+1)) continue; // 마지막 값을 추가했으므로 size+1을 검사
 
 			dfs(size+1, i);
 
@@ -54,24 +54,24 @@ public class Main {
 
 	static boolean validate(int size) {
 
-		// 비교할 길이
+		// 비교할 길이(2부터 size/2까지)
 		for (int l=2; l<=size/2; l++) {
 
-			// 시작점
-			for (int stt=0; stt<size-l; stt++) {
+			boolean isSame = true;
 
-				// 동일 여부 체크
-				StringBuilder num1 = new StringBuilder();
-				StringBuilder num2 = new StringBuilder();
+			// 마지막 값이 포함된 블럭만 조회한다
+			// 즉, 마지막 추가된 값부터, l까지만 탐색하면 된다. 앞에서부터 할 필요가 없다
+			for (int stt=0; stt<l; stt++) {
 
-				for (int idx=stt; idx+l < size && idx<stt+l; idx++) {
-					num1.append(selected[idx]);
-					num2.append(selected[idx+l]);
+				if (selected[size - stt -1] != selected[size - stt - l -1]) {
+					isSame = false;
+					break;
 				}
 
-				// 하나라도 동일한게 있다면 false를 return
-				if (num1.length() == l && num1.toString().equals(num2.toString())) return false;
 			}
+
+			// 하나라도 동일한게 있다면 false를 return
+			if (isSame) return false;
 		}
 
 		return true;
