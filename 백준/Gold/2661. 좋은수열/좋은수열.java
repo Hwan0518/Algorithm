@@ -45,6 +45,7 @@ public class Main {
 			if (!validate(size+1)) continue; // 마지막 값을 추가했으므로 size+1을 검사
 
 			dfs(size+1, i);
+			if (ans) return;
 
 		}
 
