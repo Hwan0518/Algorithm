@@ -12,7 +12,6 @@ public class Main {
 	static int[][] board;
 	static int[] dr = { -1, 1, 0, 0 };
 	static int[] dc = { 0, 0, -1, 1 };
-	static boolean[][] visited;
 	static boolean[] alphabet;
 
 
@@ -34,9 +33,7 @@ public class Main {
 		}
 
 		// dfs
-		visited = new boolean[r][c];
 		alphabet = new boolean[26];
-		visited[0][0] = true;
 		alphabet[board[0][0]] = true;
 		dfs(new Node(0, 0), 1);
 
@@ -56,15 +53,12 @@ public class Main {
 			int nc = cur.c + dc[i];
 
 			if (nr<0 || nr>=r || nc<0 || nc>=c) continue;
-			if (visited[nr][nc]) continue;
 			if (alphabet[board[nr][nc]]) continue;
 
 			moved = true;
-
-			visited[nr][nc] = true;
+			
 			alphabet[board[nr][nc]] = true;
 			dfs(new Node(nr, nc), cnt+1);
-			visited[nr][nc] = false;
 			alphabet[board[nr][nc]] = false;
 
 		}
