@@ -10,10 +10,10 @@ public class Main {
 	static int m;
 	static int[][] visited;
 	static int[][] map;
-	static int[] dr = { 1, 0, -1, 0 }; // 하,우,상,좌 순서
-	static int[] dc = { 0, 1, 0, -1 }; // 하,우,상,좌 순서
-	static int wallCnt;
+	static int[] dr = { -1, 1, 0, 0 };
+	static int[] dc = { 0, 0, -1, 1 };
 	static int[][] minMap;
+
 
 
 	public static void main(String[] args) throws IOException {
@@ -33,7 +33,7 @@ public class Main {
 		// bfs
 		resetMinMap();
 		resetVisited();
-		int ans = bfs(new Node(0, 0, 1, 0, -1, -1));
+		int ans = bfs(new Node(0, 0, 1, 0));
 
 		// result
 		System.out.print(ans);
@@ -45,15 +45,13 @@ public class Main {
 
 		Deque<Node> q = new ArrayDeque<>();
 		q.add(stt);
-		visited[stt.r][stt.c] = stt.w;
+		visited[stt.r][stt.c] = 0;
 
 		while (!q.isEmpty()) {
 
 			Node cur = q.removeFirst();
 
-			if (cur.r == n-1 && cur.c == m-1) {
-				return cur.cnt;
-			}
+			if (cur.r == n-1 && cur.c == m-1) return cur.cnt;
 
 			for (int i=0; i<4; i++) {
 
@@ -61,22 +59,21 @@ public class Main {
 				int nc = cur.c + dc[i];
 
 				if (nr<0 || nr>=n || nc<0 || nc>=m) continue;
-				if (visited[nr][nc] == cur.w || (nr==cur.br && nc==cur.bc)) continue;
-				if (cur.w != 0 && cur.cnt+1 >= minMap[nr][nc]) continue;
+				if (visited[nr][nc] == cur.broken) continue;
+				if (cur.broken == 1 && cur.cnt+1 >= minMap[nr][nc]) continue;
 
-				minMap[nr][nc] = Math.min(minMap[nr][nc], cur.cnt + 1);
+				minMap[nr][nc] = cur.cnt+1;
 
 				// destroy
-				if (map[nr][nc] == 1 && cur.w == 0) {
-					wallCnt ++;
-					visited[nr][nc] = wallCnt;
-					q.add(new Node(nr, nc, cur.cnt+1, wallCnt, cur.r, cur.c));
+				if (map[nr][nc] == 1 && cur.broken == 0) {
+					visited[nr][nc] = 1;
+					q.add(new Node(nr, nc, cur.cnt+1, cur.broken+1));
 				}
 
 				// not wall
 				else if (map[nr][nc] == 0) {
-					visited[nr][nc] = cur.w;
-					q.add(new Node(nr, nc, cur.cnt + 1, cur.w, cur.r, cur.c));
+					visited[nr][nc] = cur.broken;
+					q.add(new Node(nr, nc, cur.cnt + 1, cur.broken));
 				}
 			}
 		}
@@ -88,16 +85,16 @@ public class Main {
 	static void resetMinMap() {
 
 		minMap = new int[n][m];
-		
+
 		for (int i=0; i<n; i++) {
 			for (int j=0; j<m; j++) minMap[i][j] = Integer.MAX_VALUE;
 		}
-		
+
 		minMap[0][0] = 0;
 
 
 	}
-	
+
 
 	static void resetVisited() {
 
@@ -115,21 +112,17 @@ public class Main {
 		int r;
 		int c;
 		int cnt;
-		int w;
-		int br;
-		int bc;
+		int broken;
 
-		Node(int r, int c, int cnt, int w, int br, int bc) {
+		Node(int r, int c, int cnt, int broken) {
 			this.r = r;
 			this.c = c;
 			this.cnt = cnt;
-			this.w = w;
-			this.br = br;
-			this.bc = bc;
+			this.broken = broken;
 		}
 
 	}
 
-	
+
 
 }
