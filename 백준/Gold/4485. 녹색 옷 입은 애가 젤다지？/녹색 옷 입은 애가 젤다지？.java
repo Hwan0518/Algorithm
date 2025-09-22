@@ -76,6 +76,7 @@ public class Main {
 			Node cur = q.poll();
 
 			if (dist[cur.r][cur.c] < cur.v) continue;
+			if (cur.r == n-1 && cur.c == n-1) return;
 
 			for (int i=0; i<4; i++) {
 
