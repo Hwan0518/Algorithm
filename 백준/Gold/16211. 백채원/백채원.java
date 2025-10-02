@@ -10,7 +10,7 @@ public class Main {
 	static int m;
 	static int k;
 	static List<Road>[] graph;
-	static List<Integer> ans = new ArrayList<>();
+	static TreeSet<Integer> ans = new TreeSet<>();
 	static int[] dist;
 	static List<Node> followerList;
 
@@ -59,8 +59,6 @@ public class Main {
 		bfs(BCW);
 
 		// result
-		Collections.sort(ans);
-
 		StringBuilder sb = new StringBuilder();
 		if (ans.isEmpty()) { sb.append(0); }
 		else { for (int a : ans) sb.append(a).append("\n"); }
@@ -96,7 +94,6 @@ public class Main {
 
 			}
 		}
-//			System.out.println(turn+" -> "+ Arrays.toString(dist));
 	}
 
 
