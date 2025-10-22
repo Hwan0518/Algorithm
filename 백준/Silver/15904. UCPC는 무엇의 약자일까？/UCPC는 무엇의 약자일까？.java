@@ -27,30 +27,19 @@ public class Main {
 		System.out.print(result);
 	}
 
-
+	
 	static boolean getUCPC(String s) {
-
-		// U, C1, P, C가 있는지 확인
+		
 		char[] arr = s.toCharArray();
+		char[] ucpc = { 'U', 'C', 'P', 'C' };
 
-		int U = 0;
-		int C1 = 0;
-		int P = 0;
-		int C2 = 0;
-
+		int pointer = 0;
 		for (char c : arr) {
-
-			if (c == 'U') U ++;
-
-			else if (c == 'C') {
-				// U 다음에 나와야함
-				if (U > 0) C1 ++;
-				// P 다음에 나와야함
-				if (P > 0) C2 ++;
-			}
-			else if (c == 'P' && C1 > 0) P ++; // C1 다음에 나와야함
+			
+			if (c == ucpc[pointer]) pointer ++;
+			if (pointer == 4) return true;
 		}
 
-		return U > 0 && C1 > 0 && P > 0 && C2 > 0;
+		return false;
 	}
 }
