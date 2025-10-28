@@ -99,16 +99,16 @@ public class Main {
 
 	static void move(ArrayDeque<Node> q, Node cur) {
 
-		// 3-1. 반시계로 90도 회전
-		int nDir = changeDir(cur.dir);
+		// 3-1. 반시계로 90도 회전 -> index -1 이동하고 +4 %4
+		int nDir = (cur.dir -1 +4) %4;
 
 		// 3-2. 청소할 수 있는 칸을 찾을때까지 회전
 		int nr = cur.r + dr[nDir];
 		int nc = cur.c + dc[nDir];
 
 		while (map[nr][nc] != 0) {
-
-			nDir = changeDir(nDir);
+			
+			nDir = (nDir -1 +4) %4;
 			nr = cur.r + dr[nDir];
 			nc = cur.c + dc[nDir];
 		}
@@ -118,18 +118,9 @@ public class Main {
 	}
 
 
-	static int changeDir(int curDir) {
-
-		if (curDir == 0) return 3;
-		else if (curDir == 1) return 0;
-		else if (curDir == 2) return 1;
-		else return 2;
-	}
-
-
 	static boolean goBack(ArrayDeque<Node> q, Node cur) {
 
-		int opposite = getOpposite(cur.dir);
+		int opposite = (cur.dir +2) % 4; // index 2개 이동하고 % 4
 		int nr = cur.r + dr[opposite];
 		int nc = cur.c + dc[opposite];
 
@@ -150,15 +141,6 @@ public class Main {
 		if (map[nr][nc] == 1) return false;
 
 		return true;
-	}
-
-
-	static int getOpposite(int curDir) {
-
-		if (curDir == 0) return 2;
-		else if (curDir == 1) return 3;
-		else if (curDir == 2) return 0;
-		else return 1;
 	}
 
 
