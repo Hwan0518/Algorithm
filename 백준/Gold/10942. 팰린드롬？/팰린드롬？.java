@@ -31,6 +31,19 @@ public class Main {
 			for (int j=1; j<=n; j++) dp[i][j] = -1;
 		}
 
+		// dp search
+		for (int len=1; len<=n; len++) {
+
+			int stt = 1;
+			int end = stt+len-1;
+
+			while (end <= n) {
+				validate(stt, end);
+				stt ++;
+				end ++;
+			}
+		}
+
 		// question
 		int q = Integer.parseInt(br.readLine());
 		for (int i=0; i<q; i++) {
@@ -39,8 +52,7 @@ public class Main {
 			int s = Integer.parseInt(st.nextToken());
 			int e = Integer.parseInt(st.nextToken());
 
-			int ans = dfs(s, e);
-			sb.append(ans).append("\n");
+			sb.append(dp[s][e]).append("\n");
 		}
 
 		// result
@@ -48,7 +60,7 @@ public class Main {
 	}
 
 
-	static int dfs(int s, int e) {
+	static void validate(int s, int e) {
 
 		// memoization
 		if (dp[s][e] == -1) {
@@ -65,9 +77,6 @@ public class Main {
 
 			dp[s][e] = valid ? 1 : 0;
 		}
-
-		// res
-		return dp[s][e];
 	}
 
 }
