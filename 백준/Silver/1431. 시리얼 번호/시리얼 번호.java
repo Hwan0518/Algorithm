@@ -14,21 +14,34 @@ public class Main {
 
 		// input
 		n = Integer.parseInt(br.readLine());
+		
+		Node[] arr = new Node[n];
+		for (int i=0; i<n; i++) {
+			
+			String s = br.readLine();
+			int len = s.length();
+			int sum = sumNums(s);
+			
+			arr[i] = new Node(s, len, sum);
+		}
 
-		String[] arr = new String[n];
-		for (int i=0; i<n; i++) arr[i] = br.readLine();
-
-		// sort
+		// sort - ver2
 		Arrays.sort(arr, (o1, o2) -> {
-			return o1.length() != o2.length()
-				? o1.length() - o2.length()
-				: sumNums(o1) != sumNums(o2)
-					? sumNums(o1) - sumNums(o2)
-					: getSort(o1, o2, o1) - getSort(o1, o2, o2);
+			
+			if (o1.len != o2.len) {
+				return o1.len - o2.len;
+			}
+			else if (o1.sum != o2.sum) {
+				return o1.sum - o2.sum;
+			}
+			else {
+				String s1 = o1.s;
+				return s1.compareTo(o2.s);
+			}
 		});
-
+		
 		// res
-		for (String s : arr) sb.append(s).append("\n");
+		for (Node node : arr) sb.append(node.s).append("\n");
 		System.out.print(sb);
 	}
 
@@ -54,6 +67,20 @@ public class Main {
 		}
 
 		return sum;
+	}
+	
+	
+	static class Node {
+		
+		String s;
+		int len;
+		int sum;
+		
+		Node(String s, int len, int sum) {
+			this.s = s;
+			this.len = len;
+			this.sum = sum;
+		}
 	}
 
 }
